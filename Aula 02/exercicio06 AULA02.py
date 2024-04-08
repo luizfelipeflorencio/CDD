@@ -3,15 +3,14 @@ minuto1 = int(input("Primeiros Minutos:"))
 hora2 = int(input("Segunda Hora:"))
 minuto2 = int(input("Segundos Minutos:"))
 
-if hora1 >= 12:
+if hora1 > 12:
     hora1 -= 12
 
-if hora2 >= 12:
-    hora2 -=12
-
+if hora2 > 12:
+    hora2 -= 12
 horas = hora1 + hora2
-minutos = minuto1 + minuto2
 
+minutos = minuto1 + minuto2
 if minutos >= 60:
     minutos -= 60
     horas += 1
