@@ -1,6 +1,6 @@
 hora1 = int(input("Primeira Hora:"))
 minuto1 = int(input("Primeiros Minutos:"))
-hora2 = int(input("Segundo Hora:"))
+hora2 = int(input("Segunda Hora:"))
 minuto2 = int(input("Segundos Minutos:"))
 
 if hora1 >= 12:
