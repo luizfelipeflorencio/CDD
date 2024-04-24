@@ -2,6 +2,8 @@
 sel = 0
 while sel != 3:
     sel = int(input("Qual vc quer calcular? triangulo(1), quadrado(2) ou sair do sistema(3): "))
+    if sel < 1 or sel > 3:
+        print("Opção invalida")
     if sel == 1:
             base = float(input("Digite a base do triangulo: "))
             altura = float(input("Digite a altura do triangulo: "))
