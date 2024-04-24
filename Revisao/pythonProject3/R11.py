@@ -1,6 +1,20 @@
-anos = int(input("digite quantos anos vc tem: "))
+ano = int(input("digite o ano que nasceu: "))
 mes = int(input("Digite o mês: "))
-dia = int(input("Digite o dia do aniv: "))
+dia = int(input("Digite o dia: "))
 
-calc = anos * 365 + mes * 30 + dia
-print(calc)
+anoAtual= 2024
+mesAtual= 4
+diaAtual= 24
+
+if mes < mesAtual:
+    idade = anoAtual - ano
+elif mes == mesAtual:
+    if diaAtual <= diaAtual:
+        idade = anoAtual - ano
+    else:
+        idade = anoAtual - ano - 1
+else:
+    idade = anoAtual - ano - 1
+
+
+print("Sua idade é:",idade)
