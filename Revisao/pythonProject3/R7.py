@@ -8,7 +8,7 @@ while sel != 3:
             a = (base * altura)/2
             print("A area do triangulo é:",a)
     #quadrado
-    if sel == 2:
+    elif sel == 2:
             altura = float(input("Digite a altura do quadrado: "))
             a = altura * 4
             print("A area do quadrado é:",a)
