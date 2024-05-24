@@ -1,46 +1,44 @@
 class PedraPapelTesoura():
-    def __init__(self, jogador1, jogador2):
-        self.jogador1 = jogador1
-        self.jogador2 = jogador2
-        self.jogada1 = ""
-        self.jogada2 = ""
+      def __init__(self, jogador1, jogador2):
+          self.jogador1 = jogador1
+          self.jogador2 = jogador2
+          self.jogada1 = ""
+          self.jogada2 = ""
+          self.pontos_jogador1 = 0
+          self.pontos_jogador2 = 0
 
-    def resultado(self, primeiraJogada, segundaJogada, ponto):
-        self.jogada1 = primeiraJogada.lower()
-        self.jogada2 = segundaJogada.lower()
-        self.ponto = 0
-    def contador(self):
-        if self.jogador1 == self.ponto == 3:
-            print(f"{self.jogador1} marcou 3 ponto primeiro e ganhou")
-        elif self.jogador2 == self.ponto == 3:
-            print(f"{self.jogador2} marcou 3 ponto primeiro e ganhou")
+      def resultado(self):
+          rodadas=1
+          while rodadas < 4:
+              if self.pontos_jogador1 == 2:
+                  print(f"{self.jogador1} Venceu o jogo")
+                  break
+              elif self.pontos_jogador2 == 2:
+                  print(f"{self.jogador2} Venceu o jogo")
+                  break
 
-            if self.jogada1 == "pedra" and self.jogada2 == "pedra":
-                print("Empate nenhum marcou ponto")
+              print(f"Rodada {rodadas}º ")
 
-            elif self.jogada1 == "pedra" and self.jogada2 == "papel":
-                print("Papel venceu")
+              self.jogada1=input("Escolha Papel, Pedra ou Tesoura: ")
+              self.jogada2=input("Escolha Papel, Pedra ou Tesoura: ")
 
-            elif self.jogada1 == "pedra" and self.jogada2 == "tesoura":
-                print("Pedra venceu")
+              if self.jogada1 == self.jogada2:
+                  rodadas += 1
+                  print("Empate")
+                  print((f"{self.jogador1} - {self.pontos_jogador1} X {self.pontos_jogador2} - {self.jogador2}"))
 
-            elif self.jogada1 == "papel" and self.jogada2 == "papel":
-                print("Empate")
+              elif (self.jogada1 == "pedra" and self.jogada2 == "tesoura") or (self.jogada1 == "papel" and self.jogada2 == "pedra") or (self.jogada1 == "tesoura" and self.jogada2 == "papel"):
+                  self.pontos_jogador1 += 1
+                  print(f"{self.jogador1} venceu essa rodada")
+                  print((f"{self.jogador1} - {self.pontos_jogador1} X {self.pontos_jogador2} - {self.jogador2}"))
+                  rodadas += 1
 
-            elif self.jogada1 == "papel" and self.jogada2 == "pedra":
-                print("Papel venceu")
+              elif (self.jogada2 == "pedra" and self.jogada1 == "tesoura") or (self.jogada2 == "papel" and self.jogada1 == "pedra") or (self.jogada2 == "tesoura" and self.jogada1 == "papel"):
+                  self.pontos_jogador2 += 1
+                  print(f"{self.jogador2} venceu essa rodada")
+                  print((f"{self.jogador1} - {self.pontos_jogador1} X {self.pontos_jogador2} - {self.jogador2}"))
+                  rodadas += 1
 
-            elif self.jogada1 == "papel" and self.jogada2 == "tesoura":
-                print("Tesoura venceu")
-
-            elif self.jogada1 == "tesoura" and self.jogada2 == "tesoura":
-                print("Empate")
-
-            elif self.jogada1 == "tesoura" and self.jogada2 == "papel":
-                print("Tesoura venceu")
-
-            elif self.jogada1 == "tesoura" and self.jogada2 == "pedra":
-                print("Pedra venceu")
-
-            else:
-                print("Tente Novamente")
+          else:
+              if self.pontos_jogador1 == self.pontos_jogador2:
+                  print("O jogo acabou empatado")
