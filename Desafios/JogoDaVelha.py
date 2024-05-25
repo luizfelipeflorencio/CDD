@@ -174,7 +174,3 @@ class JogoDaVelha():
                 print(f"Vitoria do {jogadaDojogador1}")
             elif vitoriaDoJogador1 == vitoriaDoJogador2:
                 print("Jogo acabou em empate")
-
-
-p1 = JogoDaVelha("Jogador1", "Jogador2")
-p1.resultado()
