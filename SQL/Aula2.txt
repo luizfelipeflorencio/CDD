@@ -1,0 +1,777 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.4.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use turma_d;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_turma_d |
++-------------------+
+| alunos            |
+| funcionarios      |
++-------------------+
+2 rows in set (0.07 sec)
+
+mysql> select * from alunos;
++--------+---------+----------+
+| codigo | nome    | telefone |
++--------+---------+----------+
+|      1 | luiz    | 12345678 |
+|      2 | lud     | 121212   |
+|      3 | izair   | 232323   |
+|      4 | adocika | 131313   |
+|      5 | mari    | 87878787 |
+|      6 | juca    | 43434343 |
++--------+---------+----------+
+6 rows in set (0.02 sec)
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario |
++-----------------+------------+-------------+--------------+----------------+---------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 |
++-----------------+------------+-------------+--------------+----------------+---------+
+9 rows in set (0.01 sec)
+
+mysql> alter table funcionarios add (
+    -> telefone char(11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table funcionarios add (
+    -> telefone char(11));
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++-------------------+
+| Tables_in_turma_d |
++-------------------+
+| alunos            |
+| funcionarios      |
++-------------------+
+2 rows in set (0.03 sec)
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+----------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | telefone |
++-----------------+------------+-------------+--------------+----------------+---------+----------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | NULL     |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | NULL     |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | NULL     |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | NULL     |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | NULL     |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | NULL     |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | NULL     |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | NULL     |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | NULL     |
++-----------------+------------+-------------+--------------+----------------+---------+----------+
+9 rows in set (0.01 sec)
+
+mysql> update funcionarios set telefone = '81912121212' where id_funcionarios = 1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> show tables;
++-------------------+
+| Tables_in_turma_d |
++-------------------+
+| alunos            |
+| funcionarios      |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | telefone    |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | 81912121212 |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | NULL        |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | NULL        |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | NULL        |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | NULL        |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | NULL        |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | NULL        |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | NULL        |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | NULL        |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> update funcionarios set telefone = '81923232323' where id_funcionarios = 2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81934343434' where id_funcionarios = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81945454545' where id_funcionarios = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81956565656' where id_funcionarios = 5;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81967676767' where id_funcionarios = 6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81978787878' where id_funcionarios = 7;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81989898989' where id_funcionarios = 8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set telefone = '81990909090' where id_funcionarios = 9;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | telefone    |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | 81912121212 |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | 81923232323 |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | 81934343434 |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | 81945454545 |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | 81956565656 |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | 81967676767 |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | 81978787878 |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | 81989898989 |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | 81990909090 |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> alter table funcionarios add (
+    -> logradouro varchar(300) not null);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios add (
+    -> complemento varchar(50));
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios add (
+    -> cep varchar(8));
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios add (
+    -> bairro varchar(50));
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table funcionarios add (
+    -> cidade varchar(50));
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> uptade funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'uptade funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 1' at line 1
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 6;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 9;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 5;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 7;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'casa 83' where id_funcionarios = 9;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 5;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 7;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 8;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set logradouro = 'rua ary peter' where id_funcionarios = 9;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 4;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 6;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 7;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set complemento = 'casa 83' where id_funcionarios = 9;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 4;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 5;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cep = '52131515' where id_funcionarios = 9;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 4;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 6;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 7;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 8;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set bairro = 'Vasco da Gama' where id_funcionarios = 9;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 2;
+Query OK, 1 row affected (0.27 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update funcionarios set cidade = 'Recife' where id_funcionarios = 9;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from funcionarios
+    -> ^C
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+-------------+---------------+-------------+----------+---------------+--------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | telefone    | logradouro    | complemento | cep      | bairro        | cidade |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+---------------+-------------+----------+---------------+--------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | 81912121212 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | 81923232323 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | 81934343434 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | 81945454545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | 81956565656 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | 81967676767 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | 81978787878 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | 81989898989 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | 81990909090 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
++-----------------+------------+-------------+--------------+----------------+---------+-------------+---------------+-------------+----------+---------------+--------+
+9 rows in set (0.02 sec)
+
+mysql> alter table funcionarios drop telefone;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from funcionarios
+    -> select * from funcionarios;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from funcionarios' at line 2
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | logradouro    | complemento | cep      | bairro        | cidade |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+9 rows in set (0.01 sec)
+
+mysql> create table telefone
+    -> (^C
+mysql> create table telefone(
+    -> id_telefone int not null auto_increment,
+    -> telefone char(11) not null,
+    -> id_funcionario int not null,
+    -> foreign key(id_funcionarios^C
+mysql> create table telefone(
+    -> id_telefone int not null auto_increment primary key,
+    -> telefone char(11) not null,
+    -> id_funcionarios int not null,
+    -> foreign key(id_funcionarios) references funcionarios(id_funcionarios));
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> desc funcionarios;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id_funcionarios | int          | NO   | PRI | NULL    | auto_increment |
+| nome            | varchar(250) | NO   |     | NULL    |                |
+| cpf             | char(11)     | NO   |     | NULL    |                |
+| departamento    | int          | YES  |     | NULL    |                |
+| cpf_supervisor  | char(11)     | YES  |     | NULL    |                |
+| salario         | float        | NO   |     | NULL    |                |
+| logradouro      | varchar(300) | NO   |     | NULL    |                |
+| complemento     | varchar(50)  | YES  |     | NULL    |                |
+| cep             | varchar(8)   | YES  |     | NULL    |                |
+| bairro          | varchar(50)  | YES  |     | NULL    |                |
+| cidade          | varchar(50)  | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+11 rows in set (0.04 sec)
+
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81912121212', 1);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> desc telefones;
+ERROR 1146 (42S02): Table 'turma_d.telefones' doesn't exist
+mysql> desc telefone;
++-----------------+----------+------+-----+---------+----------------+
+| Field           | Type     | Null | Key | Default | Extra          |
++-----------------+----------+------+-----+---------+----------------+
+| id_telefone     | int      | NO   | PRI | NULL    | auto_increment |
+| telefone        | char(11) | NO   |     | NULL    |                |
+| id_funcionarios | int      | NO   | MUL | NULL    |                |
++-----------------+----------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_turma_d |
++-------------------+
+| alunos            |
+| funcionarios      |
+| telefone          |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> select * from telefone
+    -> ^C
+mysql> select * from telefone;
++-------------+-------------+-----------------+
+| id_telefone | telefone    | id_funcionarios |
++-------------+-------------+-----------------+
+|           1 | 81912121212 |               1 |
++-------------+-------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81923232323', 2),
+    -> value ('81934343434', 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'value ('81934343434', 2)' at line 3
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81923232323', 2),
+    -> ('81934343434', 2);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81945454545', 3),
+    -> ('81956565656', 3),
+    -> ('81967676767', 3);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81940404040', 40),
+    -> ^C
+mysql> insert into telefone(telefone, id_funcionarios)
+    -> value ('81940404040', 40);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`turma_d`.`telefone`, CONSTRAINT `telefone_ibfk_1` FOREIGN KEY (`id_funcionarios`) REFERENCES `funcionarios` (`id_funcionarios`))
+mysql> select * from telefone
+    -> select * from telefone;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from telefone' at line 2
+mysql> select * from telefone;
++-------------+-------------+-----------------+
+| id_telefone | telefone    | id_funcionarios |
++-------------+-------------+-----------------+
+|           1 | 81912121212 |               1 |
+|           2 | 81923232323 |               2 |
+|           3 | 81934343434 |               2 |
+|           4 | 81945454545 |               3 |
+|           5 | 81956565656 |               3 |
+|           6 | 81967676767 |               3 |
++-------------+-------------+-----------------+
+6 rows in set (0.00 sec)
+
+mysql> create table func2 select * from funcionarios;
+Query OK, 9 rows affected (0.20 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from func2
+    -> ^C
+mysql> select * from func2;
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | logradouro    | complemento | cep      | bairro        | cidade |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+9 rows in set (0.01 sec)
+
+mysql> desc func2;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| id_funcionarios | int          | NO   |     | 0       |       |
+| nome            | varchar(250) | NO   |     | NULL    |       |
+| cpf             | char(11)     | NO   |     | NULL    |       |
+| departamento    | int          | YES  |     | NULL    |       |
+| cpf_supervisor  | char(11)     | YES  |     | NULL    |       |
+| salario         | float        | NO   |     | NULL    |       |
+| logradouro      | varchar(300) | NO   |     | NULL    |       |
+| complemento     | varchar(50)  | YES  |     | NULL    |       |
+| cep             | varchar(8)   | YES  |     | NULL    |       |
+| bairro          | varchar(50)  | YES  |     | NULL    |       |
+| cidade          | varchar(50)  | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+11 rows in set (0.03 sec)
+
+mysql> alter table func2 add(
+    -> id_funcionarios primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key)' at line 2
+mysql> alter table func2 modify id_funcionarios
+    -> int not null auto_increment primary key;
+Query OK, 9 rows affected (0.14 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc func2
+    -> ^C
+mysql>
+mysql> desc func2;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id_funcionarios | int          | NO   | PRI | NULL    | auto_increment |
+| nome            | varchar(250) | NO   |     | NULL    |                |
+| cpf             | char(11)     | NO   |     | NULL    |                |
+| departamento    | int          | YES  |     | NULL    |                |
+| cpf_supervisor  | char(11)     | YES  |     | NULL    |                |
+| salario         | float        | NO   |     | NULL    |                |
+| logradouro      | varchar(300) | NO   |     | NULL    |                |
+| complemento     | varchar(50)  | YES  |     | NULL    |                |
+| cep             | varchar(8)   | YES  |     | NULL    |                |
+| bairro          | varchar(50)  | YES  |     | NULL    |                |
+| cidade          | varchar(50)  | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+11 rows in set (0.00 sec)
+
+mysql> desc telefone
+    -> ^C
+mysql> desc telefone;
++-----------------+----------+------+-----+---------+----------------+
+| Field           | Type     | Null | Key | Default | Extra          |
++-----------------+----------+------+-----+---------+----------------+
+| id_telefone     | int      | NO   | PRI | NULL    | auto_increment |
+| telefone        | char(11) | NO   |     | NULL    |                |
+| id_funcionarios | int      | NO   | MUL | NULL    |                |
++-----------------+----------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> update table telefone modify numero where telefone;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table telefone modify numero where telefone' at line 1
+mysql> update telefone modify numero where telefone;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'numero where telefone' at line 1
+mysql> ALTER TABLE Customer rename columm telefone to numero;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'telefone to numero' at line 1
+mysql> alter table telefone rename column telefone to numero
+    -> ^C
+mysql> alter table telefone rename column telefone to numero;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table telefone rename table telefone to contato;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table telefone to contato' at line 1
+mysql> rename table telefone to contato;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> alter table funcionarios add(
+    -> email varchar(50));
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++-------------------+
+| Tables_in_turma_d |
++-------------------+
+| alunos            |
+| contato           |
+| func2             |
+| funcionarios      |
++-------------------+
+4 rows in set (0.02 sec)
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+-------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | logradouro    | complemento | cep      | bairro        | cidade | email |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+-------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife | NULL  |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+-------+
+9 rows in set (0.01 sec)
+
+mysql> alter table funcionarios drop email;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | logradouro    | complemento | cep      | bairro        | cidade |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+9 rows in set (0.00 sec)
+
+mysql> create table email(
+    -> id_email int not null auto_increment primary key,
+    -> email varchar(50)not null,
+    -> id_funcionarios int not null,
+    -> foreign key(id_funcionarios) references funcionarios(id_funcionarios));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into email(email,id_funcionarios)
+    -> values ('lipinhopressao@gmail.com', 8);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from funcionarios;
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+| id_funcionarios | nome       | cpf         | departamento | cpf_supervisor | salario | logradouro    | complemento | cep      | bairro        | cidade |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+|               1 | jose mario | 12345678910 |            3 | 01987654321    |    3500 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               2 | izair      | 12121212121 |            2 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               3 | lud        | 22222222222 |            3 | 21212121212    |    7004 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               4 | kananda    | 23232323232 |            5 | 21212121212    |    3423 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               5 | vivi       | 24242424242 |            1 | 21212121212    |   16045 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               6 | joao       | 25252525252 |            5 | 21212121212    |    7856 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               7 | melmel     | 26262626262 |            4 | 21212121212    |    4354 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               8 | lipinho    | 27272727272 |            3 | 21212121212    |   76545 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
+|               9 | felipe     | 28282828282 |            2 | 21212121212    |    9876 | rua ary peter | casa 83     | 52131515 | Vasco da Gama | Recife |
++-----------------+------------+-------------+--------------+----------------+---------+---------------+-------------+----------+---------------+--------+
+9 rows in set (0.01 sec)
+
+mysql> select * from email;
++----------+--------------------------+-----------------+
+| id_email | email                    | id_funcionarios |
++----------+--------------------------+-----------------+
+|        1 | lipinhopressao@gmail.com |               8 |
++----------+--------------------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql>
