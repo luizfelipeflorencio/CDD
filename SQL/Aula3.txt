@@ -1,0 +1,409 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 97
+Server version: 8.4.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use turma_d;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| desafio_b          |
+| desafiofinal       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| turma_a            |
+| turma_b            |
+| turma_c            |
+| turma_d            |
++--------------------+
+10 rows in set (0.08 sec)
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> create database desafio_turma_d;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> use desafio_turma_d;
+Database changed
+mysql> create table alunos(
+    -> matricula int not null auto_increment primary key,
+    -> nome varchar(250) not null,
+    -> telefone char(11) not null);
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> create table disciplinas(
+    -> id_disc int not null auto_increment primary key,
+    -> nome varchar(250) not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> disciplinas int not null,
+    -> foreign key (matricula) references alunos(id_disc),
+    -> foreign key (disciplinas) references alunos(id_disc));
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'id_disc' for constraint 'matriculados_ibfk_1' in the referenced table 'alunos'
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> disciplinas int not null,
+    -> foreign key (matricula) references alunos(id_disc),
+    -> foreign key (id_disc) references alunos(id_disc));
+ERROR 1072 (42000): Key column 'id_disc' doesn't exist in table
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> id_disc int not null,
+    -> foreign key (matricula) references alunos(id_disc),
+    -> foreign key (id_disc) references alunos(id_disc));
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'id_disc' for constraint 'matriculados_ibfk_1' in the referenced table 'alunos'
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> id_disc int not null,
+    -> foreign key (matricula) references alunos(matriculados),
+    -> foreign key (id_disc) references disciplinas(id_disc));
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'matriculados' for constraint 'matriculados_ibfk_1' in the referenced table 'alunos'
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> id_disc int not null,
+    -> foreign key (matricula) references alunos (matriculados),
+    -> foreign key (id_disc) references disciplinas (id_disc));
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'matriculados' for constraint 'matriculados_ibfk_1' in the referenced table 'alunos'
+mysql> create table matriculados(
+    -> id_mat int not null auto_increment primary key,
+    -> matricula int not null,
+    -> id_disc int not null,
+    -> foreign key (matricula) references alunos (matricula),
+    -> foreign key (id_disc) references disciplinas (id_disc));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> insert into alunos(nome,telefone),
+    -> values ('luiz','81912121212'),
+    -> ('juca','81923232323'),
+    -> ('ka','81934343434'),
+    -> ('vi','81945454545'),
+    -> ('izair','81956565656'),
+    -> ('lud','81967676767'),
+    -> ('mari','81978787878'),
+    -> ('melmel','81989898989'),
+    -> ('taisa','81990909090'),
+    -> ('taua','8191010101010');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+values ('luiz','81912121212'),
+('juca','81923232323'),
+('ka','81934343434'),
+(' at line 1
+mysql> insert into alunos(nome,telefone)
+    -> values ('luiz','81912121212'),
+    -> ('juca','81923232323'),
+    -> ('ka','81934343434'),
+    -> ('vi','81945454545'),
+    -> ('izair','81956565656'),
+    -> ('lud','81967676767'),
+    -> ('mari','81978787878'),
+    -> ('melmel','81989898989'),
+    -> ('taisa','81990909090'),
+    -> ('taua','8191010101010');
+ERROR 1406 (22001): Data too long for column 'telefone' at row 10
+mysql> insert into alunos(nome,telefone)
+    -> values ('luiz','81912121212'),
+    -> ('juca','81923232323'),
+    -> ('ka','81934343434'),
+    -> ('vi','81945454545'),
+    -> ('izair','81956565656'),
+    -> ('lud','81967676767'),
+    -> ('mari','81978787878'),
+    -> ('melmel','81989898989'),
+    -> ('taisa','81990909090'),
+    -> ('taua','81910101010');
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> insert into disciplinas(nome)
+    -> values ('matematica'),
+    -> ('portugues'),
+    -> ('quimica'),
+    -> ('ed_fisica'),
+    -> ('artes');
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into disciplinas(matricula, id_disc)
+    -> values ('1','1'),
+    -> ('2','1'),
+    -> ('3','2'),
+    -> ('4','2'),
+    -> ('5','3'),
+    -> ('6','3'),
+    -> ('7','4'),
+    -> ('8','4'),
+    -> ('9','5'),
+    -> ('10','5');
+ERROR 1054 (42S22): Unknown column 'matricula' in 'field list'
+mysql> insert into matriculados(matricula, id_disc)
+    -> values ('1','1'),
+    -> ('2','1'),
+    -> ('3','2'),
+    -> ('4','2'),
+    -> ('5','3'),
+    -> ('6','3'),
+    -> ('7','4'),
+    -> ('8','4'),
+    -> ('9','5'),
+    -> ('10','5');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`desafio_turma_d`.`matriculados`, CONSTRAINT `matriculados_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `alunos` (`matricula`))
+mysql> insert into matriculados(matricula, id_disc)
+    -> values (1,1),
+    -> (2,1),
+    -> (3,2),
+    -> (4,2),
+    -> (5,3),
+    -> (6,3),
+    -> (7,4),
+    -> (8,4),
+    -> (9,5),
+    -> (10,5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`desafio_turma_d`.`matriculados`, CONSTRAINT `matriculados_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `alunos` (`matricula`))
+mysql> select * from alunos
+    -> ;
++-----------+--------+-------------+
+| matricula | nome   | telefone    |
++-----------+--------+-------------+
+|        11 | luiz   | 81912121212 |
+|        12 | juca   | 81923232323 |
+|        13 | ka     | 81934343434 |
+|        14 | vi     | 81945454545 |
+|        15 | izair  | 81956565656 |
+|        16 | lud    | 81967676767 |
+|        17 | mari   | 81978787878 |
+|        18 | melmel | 81989898989 |
+|        19 | taisa  | 81990909090 |
+|        20 | taua   | 81910101010 |
++-----------+--------+-------------+
+10 rows in set (0.02 sec)
+
+mysql> insert into matriculados(matricula, id_disc)
+    -> values (11,1),
+    -> (12,1),
+    -> (13,2),
+    -> (14,2),
+    -> (15,3),
+    -> (16,3),
+    -> (17,4),
+    -> (18,4),
+    -> (19,5),
+    -> (20,5);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> alter table alunos drop telefone;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from alunos
+    -> ;
++-----------+--------+
+| matricula | nome   |
++-----------+--------+
+|        11 | luiz   |
+|        12 | juca   |
+|        13 | ka     |
+|        14 | vi     |
+|        15 | izair  |
+|        16 | lud    |
+|        17 | mari   |
+|        18 | melmel |
+|        19 | taisa  |
+|        20 | taua   |
++-----------+--------+
+10 rows in set (0.01 sec)
+
+mysql> create table telefones(
+    -> id_tel int not null auto_increment primary key,
+    -> telefone char(11) not null,
+    -> matricula int not null,
+    -> foreign key (matricula) references alunos(matricula));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> create table enderenco(
+    -> id_end int not null auto increment primary key,
+    -> logradouro varchar(250) not null,
+    -> cep char(8) not null,
+    -> bairro varchar(100) not null
+    -> matricula int not null,
+    -> foreign key (matricula) references alunos(matricula));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment primary key,
+logradouro varchar(250) not null,
+cep char(8) not nu' at line 2
+mysql> create table enderenco(
+    -> id_end int not null auto increment primary key,
+    -> logradouro varchar(250) not null,
+    -> cep char(8) not null,
+    -> bairro varchar(100) not null,
+    -> matricula int not null,
+    -> foreign key (matricula) references alunos(matricula));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment primary key,
+logradouro varchar(250) not null,
+cep char(8) not nu' at line 2
+mysql> create table enderenco(
+    -> id_end int not null auto_increment primary key,
+    -> logradouro varchar(250) not null,
+    -> cep char(8) not null,
+    -> bairro varchar(100) not null,
+    -> matricula int not null,
+    -> foreign key (matricula) references alunos(matricula));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> drop enderenco;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'enderenco' at line 1
+mysql> drop table enderenco;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table enderenco(
+    -> id_end int not null auto_increment primary key,
+    -> logradouro varchar(250) not null,
+    -> complemento varchar(50) not null,
+    -> cep char(8) not null,
+    -> bairro varchar(100) not null,
+    -> matricula int not null,
+    -> foreign key (matricula) references alunos(matricula));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into telefone(telefone,matricula)
+    -> values ('81912121212','11'),
+    -> ('81923232323','12'),
+    -> ('81934343434','13'),
+    -> ('81945454545','14'),
+    -> ('81956565656','15'),
+    -> ('81967676767','16'),
+    -> ('81978787878','17'),
+    -> ('81989898989','18'),
+    -> ('81990909090','19'),
+    -> ('81910101010',20);
+ERROR 1146 (42S02): Table 'desafio_turma_d.telefone' doesn't exist
+mysql> insert into telefone(telefone,matricula)
+    -> values (81912121212,11),
+    -> (81923232323,12),
+    -> (81934343434,13),
+    -> (81945454545,14),
+    -> (81956565656,15),
+    -> (81967676767,16),
+    -> (81978787878,17),
+    -> (81989898989,18),
+    -> (81990909090,19),
+    -> (81910101010,20);
+ERROR 1146 (42S02): Table 'desafio_turma_d.telefone' doesn't exist
+mysql> insert into telefones(telefone,matricula)
+    -> values ('81912121212',11),
+    -> ('81923232323',12),
+    -> ('81934343434',13),
+    -> ('81945454545',14),
+    -> ('81956565656',15),
+    -> ('81967676767',16),
+    -> ('81978787878',17),
+    -> ('81989898989',18),
+    -> ('81990909090',19),
+    -> ('81910101010',20);
+Query OK, 10 rows affected (0.07 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> insert into enderenco(logradouro,complemento,cep,bairro,matricula)
+    -> values ('rua ary peter, 83, 52081515, vasco da gama',11),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',12),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',13),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',14),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',15),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',16),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',17),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',18),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',19),
+    -> ('rua ary peter, 83, 52081515, vasco da gama',20);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql> insert into enderenco(logradouro,complemento,cep,bairro,matricula)
+    -> values ('rua ary peter', '83', '52081515', 'vasco da gama',11),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',12),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',13),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',14),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',15),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',16),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',17),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',18),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',19),
+    -> ('rua ary peter', '83', '52081515', 'vasco da gama',20);
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select alunos.matricula,alunos.nome,telefones.telefone from alunos inner join telefones on alunos.matricula = telefones.matricula;
++-----------+--------+-------------+
+| matricula | nome   | telefone    |
++-----------+--------+-------------+
+|        11 | luiz   | 81912121212 |
+|        12 | juca   | 81923232323 |
+|        13 | ka     | 81934343434 |
+|        14 | vi     | 81945454545 |
+|        15 | izair  | 81956565656 |
+|        16 | lud    | 81967676767 |
+|        17 | mari   | 81978787878 |
+|        18 | melmel | 81989898989 |
+|        19 | taisa  | 81990909090 |
+|        20 | taua   | 81910101010 |
++-----------+--------+-------------+
+10 rows in set (0.01 sec)
+
+mysql> select alunos.matricula,alunos.nome,enederenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;
+ERROR 1054 (42S22): Unknown column 'enederenco.logradouro' in 'field list'
+mysql> select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;
++-----------+--------+---------------+----------+
+| matricula | nome   | logradouro    | cep      |
++-----------+--------+---------------+----------+
+|        11 | luiz   | rua ary peter | 52081515 |
+|        12 | juca   | rua ary peter | 52081515 |
+|        13 | ka     | rua ary peter | 52081515 |
+|        14 | vi     | rua ary peter | 52081515 |
+|        15 | izair  | rua ary peter | 52081515 |
+|        16 | lud    | rua ary peter | 52081515 |
+|        17 | mari   | rua ary peter | 52081515 |
+|        18 | melmel | rua ary peter | 52081515 |
+|        19 | taisa  | rua ary peter | 52081515 |
+|        20 | taua   | rua ary peter | 52081515 |
++-----------+--------+---------------+----------+
+10 rows in set (0.01 sec)
+
+mysql> select alunos.matricula,alunos.nome,disciplinas.id_disc,disciplinas.nome from matriculados inner join alunos on matricualdos.matricula = alunos.matri
+cula inner join disciplinas on matriculados.id_disc=disciplinas.id_disc;
+ERROR 1054 (42S22): Unknown column 'matricualdos.matricula' in 'on clause'
+mysql> select alunos.matricula,alunos.nome,disciplinas.id_disc,disciplinas.nome from matriculados inner join alunos on matriculados.matricula = alunos.matri
+cula inner join disciplinas on matriculados.id_disc=disciplinas.id_disc;
++-----------+--------+---------+------------+
+| matricula | nome   | id_disc | nome       |
++-----------+--------+---------+------------+
+|        11 | luiz   |       1 | matematica |
+|        12 | juca   |       1 | matematica |
+|        13 | ka     |       2 | portugues  |
+|        14 | vi     |       2 | portugues  |
+|        15 | izair  |       3 | quimica    |
+|        16 | lud    |       3 | quimica    |
+|        17 | mari   |       4 | ed_fisica  |
+|        18 | melmel |       4 | ed_fisica  |
+|        19 | taisa  |       5 | artes      |
+|        20 | taua   |       5 | artes      |
++-----------+--------+---------+------------+
+10 rows in set (0.01 sec)
+
+mysql> select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunosinner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;selectalunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula = enderenco.matricula;select alunos.matricula,alunos.nome,enderenco.logradouro,enderenco.cep from alunos inner join enderenco on alunos.matricula ^C
+mysql>
