@@ -1,0 +1,156 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.4.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use turma_d;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| desafio_b          |
+| desafio_turma_d    |
+| desafiofinal       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| turma_a            |
+| turma_b            |
+| turma_c            |
+| turma_d            |
++--------------------+
+11 rows in set (0.19 sec)
+
+mysql> create database aula_final
+    -> ;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> use aula_final;
+Database changed
+mysql> create table alunos(
+    -> matricula int not null auto_increment primary key,
+    -> nome varchar(250) not null,
+    -> telefone char(11) not null);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> insert into alunos(nome,telefone),
+    ->     -> values ('luiz','81912121212'),
+    ->     -> ('juca','81923232323'),
+    ->     -> ('ka^C'81934343434');
+mysql> insert into alunos (nome, telefone),
+    -> values ('luiz', '81993260406'),
+    -> ('mari', '81912121212'),
+    -> ('vivi', '81923232323');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+values ('luiz', '81993260406'),
+('mari', '81912121212'),
+('vivi', '81923232323' at line 1
+mysql> insert into alunos (nome, telefone),
+    -> values ('luiz','81993260406'),
+    -> ('mari','81912121212'),
+    -> ('vivi','81923232323');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+values ('luiz','81993260406'),
+('mari','81912121212'),
+('vivi','81923232323')' at line 1
+mysql> insert into alunos(nome,telefone)
+    -> values ('luiz','81993260406'),
+    -> ('mari', '81912121212'),
+    -> ('vivi', '81923232323');
+Query OK, 3 rows affected (0.11 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from alunos;
++-----------+------+-------------+
+| matricula | nome | telefone    |
++-----------+------+-------------+
+|         1 | luiz | 81993260406 |
+|         2 | mari | 81912121212 |
+|         3 | vivi | 81923232323 |
++-----------+------+-------------+
+3 rows in set (0.02 sec)
+
+mysql> select * from alunos;
++-----------+------------+-------------+
+| matricula | nome       | telefone    |
++-----------+------------+-------------+
+|         1 | luiz       | 81993260406 |
+|         2 | mari       | 81912121212 |
+|         3 | vivi       | 81923232323 |
+|         4 | menino Ney | 111111111   |
++-----------+------------+-------------+
+4 rows in set (0.01 sec)
+
+mysql> create table endereco;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> use aula_final;
+Database changed
+mysql> create table endereco(
+    -> nome varchar(250) not null,
+    -> cep char(8) int not null,
+    -> logradouro varchar(250) not null,
+    -> bairro varchar(100) not null,
+    -> localidade varchar(100) not null,
+    -> uf char(2) not null,
+    -> id_endereco not null auto_increment primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int not null,
+logradouro varchar(250) not null,
+bairro varchar(100) not null,
+lo' at line 3
+mysql> create table endereco(
+    -> nome varchar(250) not null,
+    -> cep char(8) not null,
+    -> logradouro varchar(250) not null,
+    -> bairro varchar(100) not null,
+    -> localidade varchar(100) not null,
+    -> uf char(2) not null,
+    -> id_endereco not null auto_increment primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null auto_increment primary key)' at line 8
+mysql> create table endereco(
+    -> nome varchar(250) not null,
+    -> cep char(8) int not null,
+    -> logradouro varchar(250) not null,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int not null,
+logradouro varchar(250) not null,' at line 3
+mysql> create table endereco(
+    -> nome varchar(250) not null,
+    -> cep char(8) not null,
+    -> logradouro varchar(250) not null,
+    -> bairro varchar(100) not null,
+    -> localidade varchar(100) not null,
+    -> uf char(2) not null,
+    -> id_endereco int not null auto_increment primary key);
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> select * from endereco:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> select * from endereco;
++------+----------+----------------+---------------+------------+----+-------------+
+| nome | cep      | logradouro     | bairro        | localidade | uf | id_endereco |
++------+----------+----------------+---------------+------------+----+-------------+
+| luiz | 52131580 | Rua Frei Jorge | Linha do Tiro | Recife     | PE |           1 |
++------+----------+----------------+---------------+------------+----+-------------+
+1 row in set (0.03 sec)
+
+mysql> select * from endereco;
++------+----------+----------------+---------------+------------+----+-------------+
+| nome | cep      | logradouro     | bairro        | localidade | uf | id_endereco |
++------+----------+----------------+---------------+------------+----+-------------+
+| luiz | 52131580 | Rua Frei Jorge | Linha do Tiro | Recife     | PE |           1 |
+| vivi | 52131580 | Rua Frei Jorge | Linha do Tiro | Recife     | PE |           2 |
++------+----------+----------------+---------------+------------+----+-------------+
+2 rows in set (0.01 sec)
+
+mysql>
