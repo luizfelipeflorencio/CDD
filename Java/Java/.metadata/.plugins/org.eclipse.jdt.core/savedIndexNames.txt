@@ -1,4 +1,0 @@
-INDEX VERSION 1.134+C:\Users\TURMA-D\Documents\Lipinho TurmaD\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-1045939589.index
-1398445800.index
